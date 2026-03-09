@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عالم أترهيب</title>
+<style>
+/* منع النسخ بالكامل */
+body, div, span {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+/* Reset */
+* {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
+body {
+  background: #0b0c2a;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  position: relative;
+  direction: rtl;
+  min-height: 100vh;
+}
+
+/* خلفية نجوم */
+#stars {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* القسم العلوي */
+.header {
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+}
+
+/* صورة شخصية دائرية مع ضوء نابض أخضر */
+.profile {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 5px solid #00f0ff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.5s ease;
+}
+.profile::after {
+  content:'';
+  position:absolute;
+  top:-10px; left:-10px; right:-10px; bottom:-10px;
+  border-radius: 50%;
+  z-index:-1;
+  background: linear-gradient(45deg, #00ff00, #008000, #00ff00);
+  background-size: 600% 600%;
+  animation: pulseGreen 2s infinite;
+  opacity:0.7;
+}
+@keyframes pulseGreen {
+  0%,100% {opacity:0.5;}
+  50% {opacity:1;}
+}
+
+/* النص العلوي */
+.welcome {
+  margin-top: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff,0 0 20px #00f0ff,0 0 30px #00f0ff;
+  animation: pulseText 2s infinite;
+}
+@keyframes pulseText {
+  0% { text-shadow: 0 0 5px #00f0ff,0 0 10px #00f0ff,0 0 15px #00f0ff; }
+  50% { text-shadow: 0 0 15px #00f0ff,0 0 30px #00f0ff,0 0 45px #00f0ff; }
+  100% { text-shadow: 0 0 5px #00f0ff,0 0 10px #00f0ff,0 0 15px #00f0ff; }
+}
+
+/* أزرار وقنوات */
+.button, .channel-box {
+  background: rgba(0,0,0,0.3);
+  padding: 8px 20px;
+  border-radius: 12px;
+  color: #00f0ff;
+  font-weight: bold;
+  display: inline-block;
+  cursor: pointer;
+  margin:5px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #00f0ff;
+  position: relative;
+  text-align:center;
+}
+.button:active, .channel-box:active {
+  box-shadow: 0 0 20px #ff00ff;
+  transform: scale(1.05);
+}
+
+/* نص أسفل الحساب الرسمي */
+.anim-text {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #00f0ff;
+  animation: glowText 2s infinite alternate;
+}
+@keyframes glowText {
+  0% {text-shadow: 0 0 5px #00f0ff;}
+  50% {text-shadow: 0 0 20px #00f0ff;}
+  100% {text-shadow: 0 0 5px #00f0ff;}
+}
+
+/* القنوات والسوشيال */
+.channels, .channels-social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  z-index:2;
+  position: relative;
+}
+.channel-box img {
+  width: 35px;
+  height:35px;
+  border-radius: 50%;
+  margin-bottom:5px;
+}
+
+/* نص أسفل القنوات */
+.bottom-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #00f0ff;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  animation: glowText 2s infinite alternate;
+}
+.arrow-up {
+  border: solid #00f0ff;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 5px;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  margin-left:5px;
+}
+
+/* حقوق الطبع */
+.footer {
+  margin-top: 50px;
+  padding: 15px;
+  font-size: 14px;
+  color: #888;
+}
+
+/* Responsive - تحويل الأزرار لمربعات على الهاتف */
+@media only screen and (max-width: 768px) {
+  .channels, .channels-social { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+  }
+  .channel-box, .button { 
+    width: 100%; 
+    height: 80px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    padding: 0; 
+    flex-direction: column;
+  }
+  .channel-box img { 
+    width: 40px; 
+    height: 40px; 
+  }
+}
+@media only screen and (max-width: 480px) {
+  .channels, .channels-social { 
+    grid-template-columns: 1fr; 
+  }
+  .channel-box, .button { 
+    height: 70px; 
+  }
+  .welcome { font-size:18px;}
+}
+
+/* مستطيل التحذير */
+#warning-box {
+  position: fixed;
+  top: 10%;
+  left:50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  border: 2px solid #00f0ff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #00f0ff;
+  font-size:14px;
+  z-index:9999;
+  display:none;
+}
+#warning-count {
+  position: absolute;
+  bottom:5px;
+  left:5px;
+  background: rgba(0,255,255,0.5);
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:12px;
+}
+
+/* ضوء نابض عند الضغط الطويل */
+.pulse-light {
+  position:absolute;
+  top:-5px; left:-5px; right:-5px; bottom:-5px;
+  border-radius:12px;
+  background: rgba(0,255,255,0.5);
+  box-shadow:0 0 15px rgba(0,255,255,0.8);
+  z-index:-1;
+  animation: pulseBorder 1s infinite;
+}
+@keyframes pulseBorder {
+  0%,100% {transform: scale(1);}
+  50% {transform: scale(1.05);}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="header">
+  <img class="profile" src="https://i.ibb.co/39PV7xZ2/505341-CB-81-F6-4-A9-F-A311-6-AD149-BB3592.png" alt="صورة شخصية" id="profile-pic">
+
+  <div class="welcome">اتــرهــيــب عـــلـــي ¹</div>
+
+  <div class="button" data-link="https://t.me/atraheebb">قناتي الرسمية</div>
+  <div class="button" data-link="https://t.me/atraheb">حسابي الرسمي</div>
+
+  <div class="anim-text">خبير العام و هاوي التقنية أترهيب</div>
+</div>
+
+<!-- السوشيال -->
+<div class="channels-social">
+  <div class="channel-box" data-link="https://youtube.com/@atraheeb?si=faRBX21_aZg4a50S">
+    <img src="https://i.ibb.co/d0t4NBfH/IMG-1833.png"> قناتي يوتيوب
+  </div>
+  <div class="channel-box" data-link="https://www.instagram.com/9jt9i?igsh=MTJzanI5YXpjcG80YQ==">
+    <img src="https://i.ibb.co/prdXfyzP/IMG-1840.png"> انستغرام
+  </div>
+  <div class="channel-box" data-link="https://www.tiktok.com/@atraheeb?_r=1&_t=ZS-94XyOQyNyce">
+    <img src="https://i.ibb.co/svQrZxPt/IMG-1841.png"> تيك توك
+  </div>
+</div>
+
+<!-- قنوات التليجرام -->
+<div class="channels">
+  <div class="channel-box" data-link="https://t.me/atraheb3">
+    <img src="https://i.ibb.co/jPgjPLjT/IMG-1830.png"> قناتي 1
+  </div>
+  <div class="channel-box" data-link="https://t.me/atraheeb2">
+    <img src="https://i.ibb.co/jPgjPLjT/IMG-1830.png"> قناتي 2
+  </div>
+  <div class="channel-box" data-link="https://t.me/atraheeb7">
+    <img src="https://i.ibb.co/jPgjPLjT/IMG-1830.png"> قناتي 3
+  </div>
+  <div class="channel-box" data-link="https://t.me/atraheeb5">
+    <img src="https://i.ibb.co/jPgjPLjT/IMG-1830.png"> قناتي 4
+  </div>
+  <div class="channel-box" data-link="https://t.me/atraheeb1">
+    <img src="https://i.ibb.co/jPgjPLjT/IMG-1830.png"> قناتي 5
+  </div>
+</div>
+
+<div class="bottom-text">اكتشفوا قنواتي الرائعة <i class="arrow-up"></i></div>
+<div class="footer">جميع الحقوق محفوظة لدى أترهيب</div>
+
+<!-- مستطيل التحذير -->
+<div id="warning-box">ما تنسخ رابط لا تلح 😂<div id="warning-count">3</div></div>
+
+<script>
+// منع النسخ والضغط الطويل
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("cut", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// ضوء الصورة الشخصية عند الضغط
+const profile = document.getElementById("profile-pic");
+profile.addEventListener("click", () => { profile.classList.toggle("active"); });
+
+// خلفية النجوم
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+let stars = [];
+for(let i=0;i<400;i++){
+  stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
+}
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+    s.x += s.dx;
+    s.y += s.dy;
+    if(s.x<0||s.x>canvas.width) s.dx*=-1;
+    if(s.y<0||s.y>canvas.height) s.dy*=-1;
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// الضغط الطويل للأزرار مع ضوء والمستطيل التحذيري
+function handleLongPress(el){
+  let timeout;
+  let warningBox = document.getElementById("warning-box");
+  let countEl = document.getElementById("warning-count");
+  el.addEventListener("mousedown", startPress);
+  el.addEventListener("touchstart", startPress);
+  el.addEventListener("mouseup", endPress);
+  el.addEventListener("mouseleave", endPress);
+  el.addEventListener("touchend", endPress);
+
+  function startPress(e){
+    e.preventDefault();
+    // ضوء نابض
+    const light = document.createElement("div");
+    light.classList.add("pulse-light");
+    el.appendChild(light);
+    // عرض المستطيل التحذيري
+    warningBox.style.display="block";
+    let counter=3;
+    countEl.textContent=counter;
+    let interval = setInterval(()=>{
+      counter--;
+      countEl.textContent=counter;
+      if(counter<=0){
+        clearInterval(interval);
+        warningBox.style.display="none";
+        light.remove();
+      }
+    },1000);
+    timeout = interval;
+  }
+
+  function endPress(){
+    // لا نفعل شيء إضافي هنا لأن الضوء والمستطيل تختفي تلقائياً
+  }
+}
+
+// تطبيق على كل الأزرار والقنوات
+document.querySelectorAll(".button, .channel-box").forEach(el=>{
+  handleLongPress(el);
+  el.addEventListener("click", ()=>{
+    window.open(el.dataset.link,"_blank");
+  });
+});
+</script>
+
+</body>
+</html>
